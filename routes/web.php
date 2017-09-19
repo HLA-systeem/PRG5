@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin', function(){
-    echo "Tits !";
+    echo "admin page";
 })->middleware('admin');
 
 Route::resource('projects','ProjectController');

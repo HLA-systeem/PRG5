@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Project;
 
 class ProjectController extends Controller
 {
@@ -13,7 +14,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $projects = Project::orderBy('id','desc')->get();
+        //$projects = Project::orderBy('id','desc')->paginate(5);
+        return view('projects')->with('projects', $projects);
     }
 
     /**
@@ -34,7 +37,10 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [ 
+            'title' => 'required',
+            'body' => 'required'
+        ]);
     }
 
     /**
@@ -45,7 +51,8 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $project = Project::find($id);
+        return view('project')->with('project', $project);
     }
 
     /**
