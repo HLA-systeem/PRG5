@@ -7,7 +7,7 @@
             <li class="well"><a href="/projects/{{$project->id}}">{{$project->title}}</a></li>
         @endforeach
         </ul>
-        <!--$projects->links}} werkt nog niet-->
+        <span id="links">{{ $projects->links() }}</span>
     @else
         <p>No projects found, maybe there is something wrong with the database connection.</p>
     @endif
