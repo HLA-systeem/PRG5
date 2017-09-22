@@ -8,7 +8,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('body','Body') }}
-            {{ Form::text('body', '', ['class'=>'form-control', 'placeholder'=>'Enter description']) }}
+            {{ Form::text('body', '', ['id' => 'article-ckeditor', 'class'=>'form-control', 'placeholder'=>'Enter description']) }}
         </div>
         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}

@@ -168,6 +168,7 @@ return [
          * Package Service Providers...
          */
          Collective\Html\HtmlServiceProvider::class,
+         Unisharp\Ckeditor\ServiceProvider::class,
 
         /*
          * Application Service Providers...
