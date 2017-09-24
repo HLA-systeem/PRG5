@@ -45,7 +45,7 @@ class ProjectController extends Controller
         $project->body = $request->input('body');
         $project->save();
 
-        return redirect('/projects')->with('succes', 'Project Added!');
+        return redirect('/projects')->with('success', 'Project Added!');
     }
 
     /**
@@ -66,7 +66,8 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        //
+        $project = Project::find($id);
+        return view('editProject')->with('project', $project);
     }
 
     /**
@@ -77,7 +78,17 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-        //
+        $this->validate($request, [ 
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
+        $project = Project::find($id);
+        $project->title = $request->input('title');
+        $project->body = $request->input('body');
+        $project->save();
+
+        return redirect('/projects')->with('success', 'Project Updated!');
     }
 
     /**
@@ -87,6 +98,9 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        //
+        $project = Project::find($id);
+        $project->delete();
+
+        return redirect('/projects')->with('success', 'Project Removed.');
     }
 }
