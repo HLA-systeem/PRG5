@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    {!! Form::open([action => 'ProjectController@store', 'method' => 'POST']) !!}
+    {!! Form::open(['action' => 'ProjectController@store', 'method' => 'POST']) !!}
         <div class="form-group">
             {{ Form::label('title','Title') }}
             {{ Form::text('title', '', ['class'=>'form-control', 'placeholder'=>'Enter title']) }}

@@ -43,6 +43,7 @@ class ProjectController extends Controller
         $project = new Project;
         $project->title = $request->input('title');
         $project->body = $request->input('body');
+        $project->user_id = auth()->user()->id;
         $project->save();
 
         return redirect('/projects')->with('success', 'Project Added!');
@@ -78,6 +79,8 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
+        // print_r($request);exit;
+        
         $this->validate($request, [ 
             'title' => 'required',
             'body' => 'required'

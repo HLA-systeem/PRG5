@@ -4,7 +4,7 @@
     @if(count($projects) > 0)
         <ul>
         @foreach($projects as $project)
-            <li class="well"><a href="/projects/{{$project->id}}">{{$project->title}}</a></li>
+            <li  class="well list-group-item"><a href="/projects/{{$project->id}}">{{$project->title}}</a></li>
         @endforeach
         </ul>
         <span id="links">{{ $projects->links() }}</span>

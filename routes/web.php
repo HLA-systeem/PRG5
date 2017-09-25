@@ -22,4 +22,4 @@ Route::get('/admin', function(){
     echo "admin page";
 })->middleware('admin');
 
-Route::resource('projects','ProjectController');
+Route::resource('/projects','ProjectController');
