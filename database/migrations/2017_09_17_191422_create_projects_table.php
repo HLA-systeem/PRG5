@@ -16,16 +16,10 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->integer('creator_id')->default(1)->unsigned(); //haal de default later weg
+            $table->integer('creator_id')->references('id')->on('users')->default(1)->unsigned(); //haal de default later weg
             $table->mediumText('body');
             $table->bigInteger('times viewed')->default(0);
             $table->text('tags');
-            $table->string('image1')->default("");
-            $table->string('image2')->default("");
-            $table->string('image3')->default("");
-            $table->string('image4')->default("");
-            $table->string('image5')->default("");
-            $table->string('image6')->default("");
             $table->timestamps();
         });
     }

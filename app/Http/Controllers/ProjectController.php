@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Project;
 
-class ProjectController extends Controller
-{
+class ProjectController extends Controller{
+
+    public function __construct(){
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,8 +41,13 @@ class ProjectController extends Controller
     public function store(Request $request){
         $this->validate($request, [ 
             'title' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'project_image' => 'image|nullable|max:1999'
         ]);
+
+        if($request->hasFile('project_image')){
+            
+        }
 
         $project = new Project;
         $project->title = $request->input('title');
@@ -68,6 +77,11 @@ class ProjectController extends Controller
      */
     public function edit($id){
         $project = Project::find($id);
+
+        if(auth()->user()->id !== $project->creator_id){
+            return redirect('/projects/' + $id)->with('error', 'Unauthorized Page');
+        }
+
         return view('editProject')->with('project', $project);
     }
 
@@ -83,7 +97,8 @@ class ProjectController extends Controller
         
         $this->validate($request, [ 
             'title' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'project_image' => 'image|nullable|max:1999'
         ]);
 
         $project = Project::find($id);
@@ -102,6 +117,11 @@ class ProjectController extends Controller
      */
     public function destroy($id){
         $project = Project::find($id);
+
+        if(auth()->user()->id !== $project->creator_id){
+            return redirect('/projects/' + $id)->with('error', 'Unauthorized Page');
+        }
+
         $project->delete();
 
         return redirect('/projects')->with('success', 'Project Removed.');
