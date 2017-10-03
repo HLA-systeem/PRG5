@@ -28,8 +28,9 @@
                         @guest
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
-                            <li><a href="/projects">Projects</a></li>
                         @else
+                            <li><a href="/projects">Search Projects</a></li>
+                            <li><a href="/project/create">Create New</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
