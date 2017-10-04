@@ -5,8 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable{
     use Notifiable;
 
     /**
@@ -28,6 +27,6 @@ class User extends Authenticatable
     ];
 
     public function projects(){
-        return $this->hasMany('App\Project');
+        return $this->hasMany('App\Project', 'creator_id');
     }
 }

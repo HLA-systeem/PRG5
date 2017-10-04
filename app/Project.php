@@ -11,7 +11,7 @@ class Project extends Model{
     ];
 
     public function creator(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'creator_id');
     }
 
     public function images(){
