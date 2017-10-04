@@ -7,8 +7,7 @@
             {{ Form::text('title', $project->title, ['class'=>'form-control', 'placeholder'=>'Enter title']) }}
         </div>
         <div class="form-group">
-            {{ Form::label('project image','Project images') }}
-            {{ Form::file('project image') }}
+            <!-- images add & delete option-->
         </div>
         <div class="form-group">
             {{ Form::label('body','Body') }}

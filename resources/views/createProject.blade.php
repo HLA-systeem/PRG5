@@ -7,8 +7,8 @@
             {{ Form::text('title', '', ['class'=>'form-control', 'placeholder'=>'Enter title']) }}
         </div>
         <div class="form-group">
-            {{ Form::label('project image','Project images') }}
-            {{ Form::file('project image') }}
+            {{ Form::label('project_images','Project images') }}
+            {{ Form::file('project_images[]', ['multiple' => 'multiple']) }}
         </div>
         <div class="form-group">
             {{ Form::label('body','Body') }}

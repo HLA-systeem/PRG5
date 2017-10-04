@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UploadRequest;
 use App\Project;
 use App\Image;
 
@@ -30,30 +31,30 @@ class ProjectController extends Controller{
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
-        $this->validate($request, [ 
-            'title' => 'required',
-            'body' => 'required',
-            'project_image' => 'image|nullable|max:1999'
-        ]);
-
-        if($request->hasFile('project_image')){
-            $this->prepImage($request);
-        }
-        else{
-            $image = 'noImage.png';
-        }
-
+    public function store(UploadRequest $request){
         $project = new Project;
         $project->title = $request->input('title');
         $project->body = $request->input('body');
         $project->user_id = auth()->user()->id;
         $project->save();
 
-        $imageModel = new Image;
-        $imageModel->project_id = $project->id;
-        $imageModel->url = $image;
-        $imageModel->save();
+        
+        if($request->hasFile('project_images')){
+            foreach ($request->project_images as $project_image) {
+                $image = $this->prepImage($request);
+
+                $imageModel = new Image;
+                $imageModel->project_id = $project->id;
+                $imageModel->url = $image;
+                $imageModel->save();
+            }
+        }
+        else{
+            $imageModel = new Image;
+            $imageModel->project_id = $project->id;
+            $imageModel->url = 'noImage.png';
+            $imageModel->save();
+            }
 
         return redirect('/projects')->with('success', 'Project Added!');
     }
@@ -98,7 +99,6 @@ class ProjectController extends Controller{
         $this->validate($request, [ 
             'title' => 'required',
             'body' => 'required',
-            'project_image' => 'image|nullable|max:1999'
         ]);
 
 
@@ -106,13 +106,6 @@ class ProjectController extends Controller{
         $project->title = $request->input('title');
         $project->body = $request->input('body');
         $project->save();
-
-        if($request->hasFile('project_image')){
-            $this->prepImage($request);
-            $imageModel = Image::find($project->images->id);
-            $imageModel->url = $image;
-            $imageModel->save();
-        }
 
         return redirect('/projects')->with('success', 'Project Updated!');
     }
@@ -135,11 +128,12 @@ class ProjectController extends Controller{
         return redirect('/projects')->with('success', 'Project Removed.');
     }
 
-    private function prepImage($request){
-        $image = $request->file('project_image')->getClientOriginalName();
+    private function prepImage($project_image){
+        $image = $project_image->getClientOriginalName();
         $imageName = pathinfo($image, PATHINFO_FILENAME);
-        $imageExtension = $request->file('project_image')>getClientOriginalExtension();
+        $imageExtension = $project_image->getClientOriginalExtension();
         $image = $imageName.'_'.time().'.'.$imageExtension;
-        $path = $request->file('project_image')->storeAs('public/project_images', $image);
+        $path = $project_image->storeAs('public/project_images', $image);
+        return $image;
     }
 }
