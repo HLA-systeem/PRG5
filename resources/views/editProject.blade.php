@@ -11,7 +11,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('body','Body') }}
-            {{ Form::textarea('body', $project->body, ['id' => 'article-ckeditor', 'class'=>'form-control', 'placeholder'=>'Enter description']) }}
+            {{ Form::textarea('body', $project->body, ['id' => 'ckeditor', 'class'=>'form-control', 'placeholder'=>'Enter description']) }}
         </div>
         {{Form::hidden('_method', 'PUT')}} <!--spoof PUT request -->
         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}

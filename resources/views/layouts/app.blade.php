@@ -70,8 +70,9 @@
     <div id="app">
         @include('inc.navbar')
         @include('inc.messages')
-
-        @yield('content')
+        <div class="col-md-10 col-md-offset-1">
+            @yield('content')
+        </div>
     </div>
 </body>
     <!-- Scripts -->
@@ -79,6 +80,6 @@
     
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
     <script>
-        CKEDITOR.replace( 'article-ckeditor' );
+        CKEDITOR.replace( 'ckeditor' );
     </script>
 </html>

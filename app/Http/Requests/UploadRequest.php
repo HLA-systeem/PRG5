@@ -26,13 +26,13 @@ class UploadRequest extends FormRequest
         $rules = [
             'title' => 'required',
             'body' => 'required',
-            'project_image' => 'image|mimes:png|nullable|max:1999'
+            'project_image' => 'image|mimes:png,jpeg|nullable|max:1999'
         ];
 
         $images = count($this->input('project_images'));
 
         foreach(range(0, $images) as $image){
-            $rules[$image] = 'image|mimes:png|nullable|max:1999';
+            $rules[$image] = 'image|mimes:png,jpeg|nullable|max:1999';
         }
 
         return $rules;
