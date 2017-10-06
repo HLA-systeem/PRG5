@@ -17,10 +17,10 @@ class ProjectController extends Controller{
     public function index(){
         //$projects = Project::orderBy('id','desc')->get();
         $projects = Project::orderBy('id','desc')->paginate(8);
-        return view('projects')->with('projects', $projects->images);
+        return view('projects')->with('projects', $projects);
     }
 
-    public function create(){  
+    public function upload(){  
        return view('createProject');
     }
     
@@ -35,7 +35,7 @@ class ProjectController extends Controller{
         
         if($request->hasFile('project_images')){
             foreach ($request->project_images as $project_image) {
-                $image = $this->prepImage($request);
+                $image = $this->prepImage($project_image);
 
                 $imageModel = new Image;
                 $imageModel->project_id = $project->id;

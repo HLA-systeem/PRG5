@@ -8,7 +8,7 @@ class Image extends Model
 {
     protected $fillable = ['project_id', 'url'];
 
-    public function creator(){
+    public function project(){
         return $this->belongsTo('App\Project');
     }
 }

@@ -22,4 +22,5 @@ Route::get('/admin', function(){
     echo "admin page";
 })->middleware('admin');
 
-Route::resource('/projects','ProjectController');
+Route::get('/projects/upload','ProjectController@upload');
+Route::resource('/projects','ProjectController', ['except' => ['create']]);

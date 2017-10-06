@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tag extends Model{
     protected $fillable = ['project_id', 'name'];
     
-    public function creator(){
+    public function project(){
         return $this->belongsTo('App\Project');
     }
     
