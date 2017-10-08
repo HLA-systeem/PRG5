@@ -2,18 +2,19 @@
 
 namespace Tests\Settings;
 
+use Symfony\Component\Yaml\Yaml;
 use Tests\Traits\GeneratesTestDirectory;
 use PHPUnit\Framework\TestCase as TestCase;
-use Laravel\Homestead\Settings\JsonSettings;
+use Laravel\Homestead\Settings\YamlSettings;
 
-class JsonSettingsTest extends TestCase
+class YamlSettingsTest extends TestCase
 {
     use GeneratesTestDirectory;
 
     /** @test */
     public function it_can_be_created_from_a_filename()
     {
-        $settings = JsonSettings::fromFile(__DIR__.'/../../resources/Homestead.json');
+        $settings = YamlSettings::fromFile(__DIR__.'/../../resources/Homestead.yaml');
 
         $attributes = $settings->toArray();
         $this->assertEquals('192.168.10.10', $attributes['ip']);
@@ -24,17 +25,17 @@ class JsonSettingsTest extends TestCase
     /** @test */
     public function it_can_be_saved_to_a_file()
     {
-        $settings = new JsonSettings([
+        $settings = new YamlSettings([
             'ip' => '192.168.10.10',
             'memory' => '2048',
             'cpus' => 1,
         ]);
-        $filename = self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.json';
+        $filename = self::$testDirectory.DIRECTORY_SEPARATOR.'Homestead.yaml';
 
         $settings->save($filename);
 
         $this->assertTrue(file_exists($filename));
-        $attributes = json_decode(file_get_contents($filename), true);
+        $attributes = Yaml::parse(file_get_contents($filename));
         $this->assertEquals('192.168.10.10', $attributes['ip']);
         $this->assertEquals('2048', $attributes['memory']);
         $this->assertEquals(1, $attributes['cpus']);
@@ -43,7 +44,7 @@ class JsonSettingsTest extends TestCase
     /** @test */
     public function it_can_update_its_attributes()
     {
-        $settings = new JsonSettings([
+        $settings = new YamlSettings([
             'ip' => '192.168.10.10',
             'memory' => '2048',
             'cpus' => 1,
@@ -64,7 +65,7 @@ class JsonSettingsTest extends TestCase
     /** @test */
     public function it_updates_only_not_null_attributes()
     {
-        $settings = new JsonSettings([
+        $settings = new YamlSettings([
             'ip' => '192.168.10.10',
             'memory' => '2048',
             'cpus' => 1,
@@ -85,7 +86,7 @@ class JsonSettingsTest extends TestCase
     /** @test */
     public function it_can_update_its_name()
     {
-        $settings = new JsonSettings(['name' => 'Initial name']);
+        $settings = new YamlSettings(['name' => 'Initial name']);
 
         $settings->updateName('Updated name');
 
@@ -96,7 +97,7 @@ class JsonSettingsTest extends TestCase
     /** @test */
     public function it_can_update_its_hostname()
     {
-        $settings = new JsonSettings(['name' => 'Initial ip address']);
+        $settings = new YamlSettings(['name' => 'Initial ip address']);
 
         $settings->updateHostname('Updated hostname');
 
@@ -107,7 +108,7 @@ class JsonSettingsTest extends TestCase
     /** @test */
     public function it_can_update_its_ip_address()
     {
-        $settings = new JsonSettings(['name' => 'Initial ip address']);
+        $settings = new YamlSettings(['name' => 'Initial ip address']);
 
         $settings->updateIpAddress('Updated ip address');
 
@@ -118,10 +119,10 @@ class JsonSettingsTest extends TestCase
     /** @test */
     public function it_can_configure_its_sites_from_existing_settings()
     {
-        $settings = new JsonSettings([
+        $settings = new YamlSettings([
             'sites' => [
                 [
-                    'map' => 'homestead.app',
+                    'map' => 'homestead.localhost',
                     'to' => '/home/vagrant/Laravel/public',
                     'type' => 'laravel',
                     'schedule' => true,
@@ -134,7 +135,7 @@ class JsonSettingsTest extends TestCase
 
         $attributes = $settings->toArray();
         $this->assertEquals([
-            'map' => 'homestead.app',
+            'map' => 'homestead.localhost',
             'to' => '/home/vagrant/Laravel/public',
             'type' => 'laravel',
             'schedule' => true,
@@ -145,12 +146,12 @@ class JsonSettingsTest extends TestCase
     /** @test */
     public function it_can_configure_its_sites_from_empty_settings()
     {
-        $settings = new JsonSettings([]);
+        $settings = new YamlSettings([]);
         $settings->configureSites('test.com', 'test-com');
 
         $attributes = $settings->toArray();
         $this->assertEquals([
-            'map' => 'test.com.app',
+            'map' => 'test.com.localhost',
             'to' => '/home/vagrant/test-com/public',
         ], $attributes['sites'][0]);
     }
@@ -158,11 +159,11 @@ class JsonSettingsTest extends TestCase
     /** @test */
     public function it_can_configure_its_shared_folders_from_existing_settings()
     {
-        $settings = new JsonSettings([
+        $settings = new YamlSettings([
             'folders' => [
                 [
-                    'map' => '~/Code',
-                    'to' => '/home/vagrant/Code',
+                    'map' => '~/code',
+                    'to' => '/home/vagrant/code',
                     'type' => 'nfs',
                 ],
             ],
@@ -173,7 +174,7 @@ class JsonSettingsTest extends TestCase
         $attributes = $settings->toArray();
         $this->assertEquals([
             'map' => '/a/path/for/project_name',
-            'to' => '/home/vagrant/Code',
+            'to' => '/home/vagrant/code',
             'type' => 'nfs',
         ], $attributes['folders'][0]);
     }
@@ -181,7 +182,7 @@ class JsonSettingsTest extends TestCase
     /** @test */
     public function it_can_configure_its_shared_folders_from_empty_settings()
     {
-        $settings = new JsonSettings([]);
+        $settings = new YamlSettings([]);
 
         $settings->configureSharedFolders('/a/path/for/project_name', 'project_name');
 

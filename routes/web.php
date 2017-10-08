@@ -24,3 +24,4 @@ Route::get('/admin', function(){
 
 Route::get('/projects/upload','ProjectController@upload');
 Route::resource('/projects','ProjectController', ['except' => ['create']]);
+Route::resource('/user','UserController', ['except' => ['create','show','store']]);

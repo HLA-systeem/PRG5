@@ -46,7 +46,7 @@ class ProjectController extends Controller{
         else{
             $imageModel = new Image;
             $imageModel->project_id = $project->id;
-            $imageModel->url = 'noImage.png';
+            $imageModel->url = 'none.png';
             $imageModel->save();
             }
 

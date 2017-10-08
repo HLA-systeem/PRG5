@@ -6,7 +6,7 @@
     <span>Times Viewed:{{$project->times_viewed}}</span>
     <hr>
     @foreach($project->images as $image)
-        <img src = echo asset('storage/project_images/{{$image->url}}')>
+        <img src="/storage/app/public/project_images/{{$image->url}}">
     @endforeach
     <p>{!!$project->body!!}</p>
     <hr>
