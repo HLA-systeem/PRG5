@@ -14,7 +14,7 @@ class UserController extends Controller{
     }
 
     public function index(){
-        return view('account')->with('user');
+        return view('account');
     }
 
     public function edit($id){
@@ -25,13 +25,12 @@ class UserController extends Controller{
         $this->validate($request, [ 
             'name' => 'required',
             'email' => 'required',
-            'avatar' => 'required',
         ]);
 
         $this->user_id = auth()->user()->id;
         $this->user = User::find($this->user_id);
 
-        return view('account')->with('user', $this->user);
+        return view('account');
     }
 
     public function destroy(){

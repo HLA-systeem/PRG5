@@ -5,6 +5,8 @@
         <div class="form-group">
             {{ Form::label('title','Title') }}
             {{ Form::text('title', '', ['class'=>'form-control', 'placeholder'=>'Enter title']) }}
+            {{ Form::label('public','Show project publicly') }}
+            {{ Form::checkbox('public', true , true) }}
         </div>
         <div class="form-group">
             {{ Form::label('project_images','Project images') }}

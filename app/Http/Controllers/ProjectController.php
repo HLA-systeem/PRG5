@@ -100,7 +100,7 @@ class ProjectController extends Controller{
         $imageName = pathinfo($image, PATHINFO_FILENAME);
         $imageExtension = $project_image->getClientOriginalExtension();
         $image = $imageName.'_'.time().'.'.$imageExtension;
-        $path = $project_image->storeAs('public/project_images', $image);
+        $path = $project_image->storeAs('project_images', $image);
         return $image;
     }
 }

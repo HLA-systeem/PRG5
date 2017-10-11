@@ -32,7 +32,6 @@
                         @else
                             <li><a href="/projects">Search Projects</a></li>
                             <li><a href="/projects/upload">Upload New</a></li>
-                            <li><a href="/projects/upload">Account</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
