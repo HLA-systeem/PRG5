@@ -16,7 +16,7 @@ class ProjectController extends Controller{
 
     public function index(){
         //$projects = Project::orderBy('id','desc')->get();
-        $projects = Project::orderBy('id','desc')->paginate(8);
+        $projects = Project::orderBy('id','desc')->where('public', 1)->paginate(8);
         return view('projects')->with('projects', $projects);
     }
 
@@ -30,6 +30,11 @@ class ProjectController extends Controller{
         $project->title = $request->input('title');
         $project->body = $request->input('body');
         $project->creator_id = auth()->user()->id;
+        
+        if($request->input('public') == ""){
+            $project->public = 0;
+        }
+
         $project->save();
 
         
@@ -55,6 +60,17 @@ class ProjectController extends Controller{
 
     public function show($id){
         $project = Project::find($id);
+
+        if($project->public == 0){
+            if(auth()->user() != ""){
+                if(auth()->user()->id !== $project->creator_id){
+                    return redirect('/projects')->with('error', 'This project is private');
+                }
+            }
+            else{
+                return redirect('/projects')->with('error', 'This project is private');
+            }
+        }
         return view('project')->with('project', $project);
     }
 
@@ -62,7 +78,7 @@ class ProjectController extends Controller{
         $project = Project::find($id);
 
         if(auth()->user()->id !== $project->creator_id){
-            return redirect('/projects/' + $id)->with('error', 'Unauthorized Page');
+            return redirect('/projects/' . $id)->with('error', 'Unauthorized Page');
         }
 
         return view('editProject')->with('project', $project);
@@ -78,6 +94,14 @@ class ProjectController extends Controller{
         $project = Project::find($id);
         $project->title = $request->input('title');
         $project->body = $request->input('body');
+
+        if($request->input('public') == ""){
+            $project->public = 0;
+        }
+        else{
+            $project->public = 1;
+        }
+
         $project->save();
 
         return redirect('/projects')->with('success', 'Project Updated!');
@@ -87,7 +111,7 @@ class ProjectController extends Controller{
         $project = Project::find($id);
 
         if(auth()->user()->id !== $project->creator_id){
-            return redirect('/projects/' + $id)->with('error', 'Unauthorized Page');
+            return redirect('/projects/' . $id)->with('error', 'Unauthorized Page');
         }
 
         $project->delete();

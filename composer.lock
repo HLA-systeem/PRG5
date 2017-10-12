@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "be3b89b50e74237eb12fec2ac4528b7d",
+    "content-hash": "40c050eef96aa337156ace818bfe705a",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -971,6 +971,54 @@
                 "php"
             ],
             "time": "2017-09-02T17:10:46+00:00"
+        },
+        {
+            "name": "okipa/laravel-toggle-switch-button",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Okipa/laravel-toggle-switch-button.git",
+                "reference": "eaa2f71168d63b36995c0ca9a0f6d606649ee4ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Okipa/laravel-toggle-switch-button/zipball/eaa2f71168d63b36995c0ca9a0f6d606649ee4ef",
+                "reference": "eaa2f71168d63b36995c0ca9a0f6d606649ee4ef",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.0",
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Okipa\\LaravelToggleSwitchButton\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arthur LORENT",
+                    "email": "arthur.lorent@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A customizable toggle switch button generator for Laravel that enables you to simply display it on your projects pages.",
+            "homepage": "https://github.com/Okipa/laravel-toggle-switch-button",
+            "keywords": [
+                "button",
+                "generate",
+                "generator",
+                "okipa",
+                "php",
+                "switch",
+                "toggle"
+            ],
+            "time": "2017-06-16T10:22:43+00:00"
         },
         {
             "name": "paragonie/random_compat",
