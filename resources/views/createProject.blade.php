@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="col-md-offset-10 col-md-2">
-        <span id="publicToggle">
-            Show this project publicly:
-            {!! ToggleSwitchButton::render('public',old('public')) !!}
-        </span>
-    </div>
-    <div>
-        {!! Form::open(['action' => 'ProjectController@store', 'method' => 'POST', 'enctype'  => 'multipart/form-data']) !!}
+    {!! Form::open(['action' => 'ProjectController@store', 'method' => 'POST', 'enctype'  => 'multipart/form-data']) !!}
+        <div class="col-md-offset-10 col-md-2">
+            <span id="publicToggle">
+                Show this project publicly:
+                {!! ToggleSwitchButton::render('public', true) !!}
+            </span>
+        </div>
+        <div>
             <div class="form-group">
                 {{ Form::label('title','Title') }}
                 {{ Form::text('title', '', ['class'=>'form-control', 'placeholder'=>'Enter title']) }}
@@ -21,7 +21,7 @@
                 {{ Form::label('body','Body') }}
                 {{ Form::textarea('body', '', ['id' => 'ckeditor', 'class'=>'form-control', 'placeholder'=>'Enter description']) }}
             </div>
-            {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
-        {!! Form::close() !!}
-    </div>
+                {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
+        </div>
+    {!! Form::close() !!}
 @endsection
