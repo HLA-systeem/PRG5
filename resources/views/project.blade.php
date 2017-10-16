@@ -33,4 +33,10 @@
             @endif
         @endif
     </div>
+
+    <script>
+        var id = '{{ $project->id }}';
+        var sendTo = '/updateAs/public';
+        var token = '{{ csrf_token() }}';    
+    </script>
 @endsection
