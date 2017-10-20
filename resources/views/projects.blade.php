@@ -1,20 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
+    <div id="filterSection" class="col-md-2">
+        {{ Form::label('search','Search Projects') }}
+        {{ Form::text('search', ' ',['id'=>'searchBar']) }}
+    </div>
     @if(count($projects) > 0)
-        <ul class="col-md-offset-2 col-md-8">
+        <ul class=" col-md-8">
         @foreach($projects as $project)
-        <a href="/projects/{{$project->id}}">
-            <li class="well list-group-item">
-                <div class="row">
-                    <div class="col-md-8">
+            <a href="/projects/{{$project->id}}">
+                <li class="well list-group-item">
+                    <div class="row">
+                        <div class="col-md-8">
                         <!--<img src="/storage/project_images/{$image->url}">-->
+                        </div>
+                        <div class="col-md-4">
+                            <span>{{$project->title}}</span>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <span>{{$project->title}}</span>
-                    </div>
-                </div>
-            </li>
+                </li>
             </a>
         @endforeach
         </ul>

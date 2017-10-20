@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 class AsynchronousController extends Controller{
-    public function public(Request $request, $id, $value){
-        return response()->json(['message'=>$request->input('id')]);
+    public function public(Request $request){
+        if ($request->isMethod('post')){
+            return response()->json(['message'=>$request->json()]);
+        }
     }
 }

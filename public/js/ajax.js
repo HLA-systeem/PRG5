@@ -10,6 +10,10 @@ window.addEventListener('load', function(){
         };
         req.open('POST', sendTo, true); //last two user & pass
         req.setRequestHeader('X-CSRF-TOKEN', token)
-        req.send("value=" + publicValue + "&id=" + id);//make into json
+       
+        let data = JSON.stringify({"value":publicValue, "id":id}); 
+        req.send(data);
     });
+
+    var searchBar = document.getElementById('search');
 });
