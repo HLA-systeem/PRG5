@@ -11,7 +11,9 @@ window.addEventListener('load', function(){
         req.open('POST', sendTo, true); //last two user & pass
         req.setRequestHeader('X-CSRF-TOKEN', token)
        
-        let data = JSON.stringify({"value":publicValue, "id":id}); 
+        var data = new FormData();
+        data.append('value', publicValue);
+        data.append('id', id);
         req.send(data);
     });
 
