@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/project_images/{fileName}','StorageController@getProjectImage')->name('project image');
 Route::get('/admin', function(){
     echo "admin page";
 })->middleware('admin');
@@ -27,3 +28,4 @@ Route::resource('/projects','ProjectController', ['except' => ['create']]);
 Route::resource('/user','UserController', ['except' => ['create','show','store']]);
 
 Route::post('/updateAs/public','AsynchronousController@public');
+Route::post('/updateAs/search','AsynchronousController@search');

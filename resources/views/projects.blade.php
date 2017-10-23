@@ -26,4 +26,9 @@
     @else
         <p>No projects found, maybe there is something wrong with the database connection.</p>
     @endif
+
+    <script>
+        var sendTo = '/updateAs/search';
+        var token = '{{ csrf_token() }}';    
+    </script>
 @endsection

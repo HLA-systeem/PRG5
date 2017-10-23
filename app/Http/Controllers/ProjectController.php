@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use App\Http\Requests\UploadRequest;
 use App\Project;
 use App\Image;
+
 
 class ProjectController extends Controller{
 
@@ -70,6 +73,7 @@ class ProjectController extends Controller{
                 return redirect('/projects')->with('error', 'This project is private');
             }
         }
+
         return view('project')->with('project', $project);
     }
 
@@ -122,8 +126,9 @@ class ProjectController extends Controller{
         $image = $project_image->getClientOriginalName();
         $imageName = pathinfo($image, PATHINFO_FILENAME);
         $imageExtension = $project_image->getClientOriginalExtension();
-        $image = $imageName.'_'.time().'.'.$imageExtension;
-        $path = $project_image->storeAs('project_images', $image);
-        return $image;
+        $fileName = $imageName.'_'.time().'.'.$imageExtension;
+        Storage::disk('local')->put($fileName, File::get($project_image));
+        //$path = $project_image->storeAs('project_images', $image);
+        return $fileName;
     }
 }

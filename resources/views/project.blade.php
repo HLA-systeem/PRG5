@@ -12,18 +12,19 @@
         @endif
     @endif
     <div>
-        <h3>Name: {{$project->title}}</h3>
-        <span>Created at:{{$project->created_at}}</span>
-        <span>Times Viewed:{{$project->times_viewed}}</span>
+        <h3 class="col-xs-12">{{$project->title}}</h3>
+        <span class="col-xs-2">Created at:{{$project->created_at}}</span>
+        <span class="col-xs-offset-1 col-xs-1">Times Viewed:{{$project->times_viewed}}</span>
+        <div class="col-xs-12">
         <hr>
         @foreach($project->images as $image)
-            <img src="/storage/app/public/project_images/{{$image->url}}">
+            <img src="{{route('project image', $image->url)}}"/>
         @endforeach
         <p>{!!$project->body!!}</p>
         <hr>
 
         @if(!Auth::guest())
-            @if(Auth::user()->id == $project->creator_id)
+            @if(Auth::user()->id == $project->creator_id || Auth::user()->role == "admin" )
                 <a href="{{$project->id}}/edit" class="btn btn-default">edit</a>
 
                 {!! Form::open(['action' => ['ProjectController@destroy', $project->id], 'method' => 'POST', 'class'=> 'pull-right']) !!}
