@@ -19,9 +19,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/project_images/{fileName}','StorageController@getProjectImage')->name('project image');
-Route::get('/admin', function(){
-    echo "admin page";
-})->middleware('admin');
+
+Route::prefix('admin')->group(function(){
+    Route::get('/login', 'Auth\AdminLoginController@show')->name('admin login');
+    Route::post('/login', 'Auth\AdminLoginController@login')->name('admin login submit');
+    Route::get('/', 'AdminController@index');
+});
+
 
 Route::get('/projects/upload','ProjectController@upload');
 Route::resource('/projects','ProjectController', ['except' => ['create']]);
