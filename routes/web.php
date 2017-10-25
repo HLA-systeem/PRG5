@@ -31,5 +31,8 @@ Route::get('/projects/upload','ProjectController@upload');
 Route::resource('/projects','ProjectController', ['except' => ['create']]);
 Route::resource('/user','UserController', ['except' => ['create','show','store']]);
 
-Route::post('/updateAs/public','AsynchronousController@public');
-Route::post('/updateAs/search','AsynchronousController@search');
+Route::prefix('updateAs')->group(function(){
+    Route::post('/public','AsynchronousController@public');
+    Route::post('/search','AsynchronousController@search');
+});
+

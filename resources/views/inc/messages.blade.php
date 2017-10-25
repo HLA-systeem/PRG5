@@ -1,7 +1,7 @@
-@if (count($errors) > 0)
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li class="list-group-item btn-danger">{{ $error }}</li>
-        @endforeach
-    </ul>
+@if(session('succes'))
+  <div class="alert alert-success">{{session('succes')}}</div>
+@endif
+
+@if(session('error'))
+  <div class="alert alert-danger">{{session('error')}}</div>
 @endif
