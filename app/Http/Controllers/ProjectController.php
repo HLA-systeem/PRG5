@@ -82,6 +82,9 @@ class ProjectController extends Controller{
             }
         }
 
+        $project->times_viewed += 1;
+        $project->save();
+
         return view('project')->with('project', $project);
     }
 

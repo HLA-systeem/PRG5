@@ -14,7 +14,7 @@
     <div>
         <h3 class="col-xs-12">{{$project->title}}</h3>
         <span class="col-xs-2">Created at:{{$project->created_at}}</span>
-        <span class="col-xs-offset-1 col-xs-1">Times Viewed:{{$project->times_viewed}}</span>
+        <span class="col-xs-offset-1 col-xs-2">Times Viewed: {{$project->times_viewed}}</span>
         <div class="col-xs-12">
         <hr>
         @foreach($project->images as $image)

@@ -19,7 +19,7 @@ class CreateProjectsTable extends Migration
             $table->boolean('public')->default(true);
             $table->integer('creator_id')->references('id')->on('users')->default(1)->unsigned(); //haal de default later weg
             $table->mediumText('body');
-            $table->bigInteger('times viewed')->default(0);
+            $table->bigInteger('times_viewed')->default(0);
             $table->timestamps();
         });
     }
