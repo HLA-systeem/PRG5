@@ -19,7 +19,16 @@ class ProjectController extends Controller{
 
     public function index(){
         $projects = Project::orderBy('id','desc')->where('public', 1)->paginate(8);
-        return view('projects')->with('projects', $projects);
+
+        $thumbnails[] = [];
+
+        foreach($projects as $project){
+           $thumbnail = Image::where('project_id', $project->id)->first();
+           $thumbnail = json_decode(json_encode($thumbnail), true);
+           array_push($thumbnails, $thumbnail);   
+        }
+
+        return view('projects')->with('projects', $projects)->with('thumbnails', $thumbnails);
     }
 
     public function upload(){  
@@ -53,7 +62,6 @@ class ProjectController extends Controller{
         else{
             $imageModel = new Image;
             $imageModel->project_id = $project->id;
-            $imageModel->url = 'none.png';
             $imageModel->save();
             }
 
@@ -112,7 +120,7 @@ class ProjectController extends Controller{
 
     public function destroy($id){
         $project = Project::find($id);
-
+        
         if(auth()->user()->id !== $project->creator_id){
             return redirect('/projects/' . $id)->with('error', 'Unauthorized Page');
         }

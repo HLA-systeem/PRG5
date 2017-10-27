@@ -11,14 +11,16 @@
         <ul class="col-xs-8" id="projectList">
         @foreach($projects as $project)
             <a href="/projects/{{$project->id}}">
-                <li class="well list-group-item">
-                    <div class="row">
-                        <div class="col-xs-8">
-                            <!--<img src="/storage/project_images/{$image->url}">-->
-                        </div>
-                        <div class="col-xs-4">
-                            <span>{{$project->title}}</span>
-                        </div>
+                <li class="well list-group-item col-xs-12">
+                    <div class="col-xs-2">
+                        @foreach($thumbnails as $thumbnail)
+                        @if($thumbnail && ($thumbnail['project_id'] == $project->id))
+                        <img class="projectsImages" src="{{route('project image', $thumbnail['url'])}}"/>
+                        @endif 
+                        @endforeach
+                    </div>
+                    <div class="col-xs-10">
+                        <span>{{$project->title}}</span>
                     </div>
                 </li>
             </a>
