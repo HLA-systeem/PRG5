@@ -1,20 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-    {!! Form::open(['action' => ['userController@update'], 'method' => 'POST']) !!}
-        <div class="form-group">
-            {{ Form::label('name','User Name') }}
-            {{ Form::text('name', Auth::user()->name, ['class'=>'form-control', 'placeholder'=>'Enter title']) }}
+    {!! Form::open(['action' => ['UserController@update', $user->id], 'method' => 'POST']) !!}
+        <div class="row">
+            <div class="form-group col-xs-offset-4 col-xs-2">
+                {{ Form::label('name','User Name') }}
+                {{ Form::text('name', $user->name, ['class'=>'form-control', 'placeholder'=>'Name']) }}
+            </div>
         </div>
-        <div class="form-group">
-            {{ Form::label('email','E-mail') }}
-            {{ Form::textarea('email', Auth::user()->email, ['id' => 'ckeditor', 'class'=>'form-control', 'placeholder'=>'Enter description']) }}
+        <div class="row">
+            <div class="form-group col-xs-offset-4 col-xs-2">
+                {{ Form::label('email','E-mail') }}
+                {{ Form::text('email', $user->email, ['class'=>'form-control', 'placeholder'=>'Email']) }}
+            </div>
         </div>
-        <div class="form-group">
-            {{ Form::label('pass','Password') }}
-            {{ Form::password('pass', Auth::user()->password, ['id' => 'ckeditor', 'class'=>'form-control', 'placeholder'=>'Enter description']) }}
+        <div class="row">
+            <div class="form-group col-xs-offset-4 col-xs-2">
+                {{ Form::label('pass','Password') }}
+                {{ Form::password('pass', ['class'=>'form-control', 'placeholder'=>'Password']) }}
+            </div>
         </div>
+        <div class="row col-xs-offset-4 col-xs-2">
         {{Form::hidden('_method', 'PUT')}} <!--spoof PUT request -->
-        {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
+        {{Form::submit('Change', ['class'=>'btn btn-default pull-right' ])}}
+        </div>
     {!! Form::close() !!}
 @endsection

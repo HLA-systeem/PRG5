@@ -15,6 +15,7 @@ Route::prefix('admin')->group(function(){
 
 
 Route::get('/projects/upload','ProjectController@upload');
+Route::get('/user/update','UserController@update');
 Route::resource('/projects','ProjectController', ['except' => ['create']]);
 Route::resource('/user','UserController', ['except' => ['create','show','store']]);
 

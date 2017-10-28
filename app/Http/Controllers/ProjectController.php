@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UploadRequest;
 use App\Project;
 use App\Image;
@@ -13,7 +14,13 @@ use App\Image;
 class ProjectController extends Controller{
 
     public function __construct(){
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        if((Auth::guard('admin')->user() == null)){
+            $this->middleware('auth:admin', ['except' => ['index', 'show']]);
+        }
+        else{
+            $this->middleware('auth', ['except' => ['index', 'show']]);
+        }
+        
     }
 
 
@@ -27,7 +34,7 @@ class ProjectController extends Controller{
            $thumbnail = json_decode(json_encode($thumbnail), true);
            array_push($thumbnails, $thumbnail);   
         }
-
+       
         return view('projects')->with('projects', $projects)->with('thumbnails', $thumbnails);
     }
 
@@ -91,7 +98,7 @@ class ProjectController extends Controller{
     public function edit($id){
         $project = Project::find($id);
 
-        if(auth()->user()->id !== $project->creator_id){
+        if( (auth()->user()->id !== $project->creator_id) || (Auth::guard('admin')->user() == null) ){
             return redirect('/projects/' . $id)->with('error', 'Unauthorized Page');
         }
 
