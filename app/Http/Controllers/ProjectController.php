@@ -16,13 +16,7 @@ use App\Tag;
 class ProjectController extends Controller{
 
     public function __construct(){
-        if((Auth::guard('admin') == null)){
-            $this->middleware('auth:admin', ['except' => ['index', 'show']]);
-        }
-        else{
-            $this->middleware('auth', ['except' => ['index', 'show']]);
-        }
-        
+        $this->middleware('roleCheck', ['except' => ['index', 'show']]);
     }
 
 
@@ -122,8 +116,10 @@ class ProjectController extends Controller{
     public function edit($id){
         $project = Project::find($id);
 
-        if( (auth()->user()->id !== $project->creator_id) || (Auth::guard('admin')->user() == null) ){
-            return redirect('/projects/' . $id)->with('error', 'Unauthorized Page');
+        if(Auth::guard('admin')->check() == false){
+            if(auth()->user()->id !== $project->creator_id){
+                return redirect('/projects/' . $id)->with('error', 'Unauthorized Page');
+            }
         }
 
         return view('editProject')->with('project', $project);

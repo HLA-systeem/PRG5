@@ -8,13 +8,7 @@ use App\User;
 
 class UserController extends Controller{
     public function __construct(){
-        if((Auth::guard('admin') == null)){
-            $this->middleware('auth:admin');
-        }
-        else{
-            $this->middleware('auth');
-        }
-        
+        $this->middleware('roleCheck', ['except' => ['index', 'show']]);
     }
 
     public function index(){
