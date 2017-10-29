@@ -21,6 +21,12 @@
                 {{ Form::label('body','Body') }}
                 {{ Form::textarea('body', '', ['id' => 'ckeditor', 'class'=>'form-control', 'placeholder'=>'Enter description']) }}
             </div>
+            @if(Auth::user()->level == "contributor")
+            <div class="form-group">
+                {{ Form::label('tags','Tags (seperate them with a comma)') }}
+                {{ Form::text('tags', '', ['class'=>'form-control', 'placeholder'=>'Enter description']) }}
+            </div>
+            @endif
                 {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
         </div>
     {!! Form::close() !!}

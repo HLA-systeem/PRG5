@@ -21,8 +21,8 @@ class UploadRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules(){
+
         $rules = [
             'title' => 'required',
             'body' => 'required',
@@ -33,6 +33,10 @@ class UploadRequest extends FormRequest
 
         foreach(range(0, $images) as $image){
             $rules[$image] = 'image|mimes:png,jpeg|nullable|max:1999';
+        }
+
+        if($this->input('tags')){
+            $rules[$this->input('tags')] = 'sometimes|min:3|max:50';
         }
 
         return $rules;

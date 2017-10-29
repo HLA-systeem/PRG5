@@ -8,13 +8,15 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UploadRequest;
 use App\Project;
+use App\User;
 use App\Image;
+use App\Tag;
 
 
 class ProjectController extends Controller{
 
     public function __construct(){
-        if((Auth::guard('admin')->user() == null)){
+        if((Auth::guard('admin') == null)){
             $this->middleware('auth:admin', ['except' => ['index', 'show']]);
         }
         else{
@@ -57,7 +59,7 @@ class ProjectController extends Controller{
 
         
         if($request->hasFile('project_images')){
-            foreach ($request->project_images as $project_image) {
+            foreach($request->project_images as $project_image) {
                 $image = $this->prepImage($project_image);
 
                 $imageModel = new Image;
@@ -71,6 +73,28 @@ class ProjectController extends Controller{
             $imageModel->project_id = $project->id;
             $imageModel->save();
             }
+
+        if($request->input('tags')){
+                $project_tags = explode(',',$request->input('tags'));
+                foreach($project_tags as $project_tag){
+                    echo $project_tag;
+                    $tag = new Tag;
+                    $tag->project_id = $project->id;
+                    $tag->name = $project_tag;
+                    $tag->save();
+                }
+            }
+    
+
+      
+        $user = User::find($project->creator_id);
+        if($user->level == 'normie'){
+            if( (count($user->projects)) == 2) {
+                $user->level = "contributor";
+                $user->save();
+                return redirect('/home')->with('success', 'Project Added! Also, you can now add tags to your project !');
+            }
+        }
 
         return redirect('/projects')->with('success', 'Project Added!');
     }
@@ -137,7 +161,7 @@ class ProjectController extends Controller{
 
         $project->delete();
 
-        return redirect('/projects')->with('success', 'Project Removed.');
+        return redirect('/home')->with('success', 'Project Removed.');
     }
 
     private function prepImage($project_image){

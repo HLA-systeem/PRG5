@@ -8,7 +8,7 @@ use App\User;
 
 class UserController extends Controller{
     public function __construct(){
-        if((Auth::guard('admin')->user() == null)){
+        if((Auth::guard('admin') == null)){
             $this->middleware('auth:admin');
         }
         else{
