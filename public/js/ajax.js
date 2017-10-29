@@ -41,23 +41,12 @@ window.addEventListener('load', function(){
                         a.setAttribute("href", "/projects/" + project.id);
                         
                         var li = document.createElement("li");
-                        li.setAttribute("class", "well list-group-item");
+                        li.setAttribute("class", "well list-group-item col-xs-12 row");
                         a.appendChild(li);
-
-                        var divRow = document.createElement("div");
-                        divRow.setAttribute("class", "row");
-                        li.appendChild(divRow);
-
-                        var div1 = document.createElement("div");
-                        var div2 = document.createElement("div");
-                        div1.setAttribute("class", "col-xs-8");
-                        div2.setAttribute("class", "col-xs-4");
-                        divRow.appendChild(div1);
-                        divRow.appendChild(div2);
                         
                         var span = document.createElement("span");
                         span.innerHTML = project.title;
-                        div2.appendChild(span);
+                        li.appendChild(span);
                         
                         
                         parent.appendChild(a);

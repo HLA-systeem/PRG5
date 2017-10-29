@@ -27,7 +27,7 @@ class ProjectController extends Controller{
 
 
     public function index(){
-        $projects = Project::orderBy('id','desc')->where('public', 1)->paginate(8);
+        $projects = Project::orderBy('id','desc')->where('public', 1)->paginate(5);
 
         $thumbnails[] = [];
 

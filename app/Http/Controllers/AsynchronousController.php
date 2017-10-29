@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Project;
+use App\Tag;
 
 class AsynchronousController extends Controller{
     public function public(Request $request){
@@ -28,11 +29,16 @@ class AsynchronousController extends Controller{
 
     public function search(Request $request){
         if ($request->isMethod('post')){
-            $projects = Project::where([
+            $projects = Project::with('tags');
+            $response = $projects->where([
                 ['public', 1],
                 ['title', 'like', '%'. $request->q .'%']
-                ])->get();
-            return response()->json(['projects'=>$projects]);
+                ])->orWherehas('tags', function ($query) use($request){
+                    $query->where('name', 'like', '%'. $request->q .'%');
+                    })->get();
+                    
+      
+            return response()->json(['projects'=>$response]);
         }
     }
 }
